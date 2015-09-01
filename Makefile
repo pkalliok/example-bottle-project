@@ -24,19 +24,29 @@ debian-8.1.0-i386-CD-1.iso:
 	wget http://ftp.funet.fi/pub/linux/mirrors/debian-cdimage/8.1.0/i386/iso-cd/debian-8.1.0-i386-CD-1.iso
 
 sudo-setup:
-	su -c "apt-get install sudo && usermod -a -G sudo `whoami`"
+	su -c "apt-get install sudo"
+	su -c "usermod -a -G sudo `whoami`"
+	echo "sudo set up!  But now you need to make a new login."
 	touch sudo-setup
 
-# Install 
 devenv-setup: sudo-setup
 	sudo apt-get install vim ctags make git
 	sudo update-alternatives --set editor /usr/bin/vim.basic
 	touch devenv-setup
 
-docker-setup: sudo-setup
+backports-setup: sudo-setup
+	sudo bash -c "echo -e '# Jessie backports (for docker)\ndeb http://http.debian.net/debian jessie-backports main contrib non-free' >> /etc/apt/sources.list"
+	sudo apt-get update
+	touch backports-setup
+
+docker-setup: sudo-setup backports-setup
 	sudo apt-get install docker.io debootstrap
 	sudo usermod -a -G docker `whoami`
+	echo "docker set up!  But now you need to make a new login."
+	touch docker-setup
+
+docker-images: docker-setup
 	sudo /usr/share/docker.io/contrib/mkimage.sh \
 	-t `whoami`/debian-stable-minimal debootstrap --variant=minbase stable
-	touch docker-setup
+	touch docker-images
 
