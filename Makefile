@@ -5,7 +5,7 @@ DEVEL_HOST=testdevelhost-1
 
 # NB! unlike other targets, this is not meant to be run in your
 # development environment.
-# Run this on your workstation if you want to setup a development
+# Run this on your RHEL6 workstation if you want to setup a development
 # environment on a virtual host (Debian Jessie 8).
 virtualbox-setup: debian-8.1.0-i386-CD-1.iso
 	sudo yum localinstall http://download.virtualbox.org/virtualbox/5.0.2/VirtualBox-5.0-5.0.2_102096_el6-1.x86_64.rpm
