@@ -1,0 +1,4 @@
+FROM USER/debian-stable-minimal
+MAINTAINER Panu Kalliokoski <panu.kalliokoski@csc.fi>
+RUN apt-get -y update && apt-get -y install python python-flask
+CMD ["python"]
