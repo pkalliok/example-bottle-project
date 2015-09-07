@@ -29,8 +29,12 @@ docker-image-minimal: docker-setup
 	-t `whoami`/debian-stable-minimal debootstrap --variant=minbase stable
 	touch docker-image-minimal
 
-docker-image-testing: testing.docker docker-image-minimal
-	docker build -rm -t `whoami`/example-bottle-testing $<
+image-%/Dockerfile: %.docker.template
+	mkdir -p `dirname $@`
+	sed "s/USER/`whoami`/g" $< >$@
+
+docker-image-%: image-%/Dockerfile docker-image-minimal
+	docker build --rm -t `whoami`/debian-stable-$* `dirname $<`
 
 # NB! unlike other targets, this is not meant to be run in your
 # development environment.

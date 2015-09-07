@@ -1,0 +1,4 @@
+# Install everything for building debian packages
+FROM USER/debian-stable-minimal
+MAINTAINER Panu Kalliokoski <panu.kalliokoski@csc.fi>
+RUN apt-get update && apt-get -y install build-essential
