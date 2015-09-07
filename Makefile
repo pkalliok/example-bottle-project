@@ -1,8 +1,6 @@
 
 all:
 
-%: stamps/%
-
 # targets for setting up the development, building and testing environments
 stamps/sudo-setup:
 	su -c "apt-get install sudo"
@@ -10,28 +8,28 @@ stamps/sudo-setup:
 	echo "sudo set up!  But now you need to make a new login."
 	mkdir -p `dirname $@` && touch $@
 
-stamps/devenv-setup: sudo-setup
+stamps/devenv-setup: stamps/sudo-setup
 	sudo apt-get install vim ctags make git
 	sudo update-alternatives --set editor /usr/bin/vim.basic
 	mkdir -p `dirname $@` && touch $@
 
-stamps/backports-setup: sudo-setup
+stamps/backports-setup: stamps/sudo-setup
 	sudo bash -c "echo -e '\n# Jessie backports (for docker)\ndeb http://http.debian.net/debian jessie-backports main contrib non-free' >> /etc/apt/sources.list"
 	sudo apt-get update
 	mkdir -p `dirname $@` && touch $@
 
-stamps/docker-setup: sudo-setup backports-setup
+stamps/docker-setup: stamps/sudo-setup stamps/backports-setup
 	sudo apt-get install docker.io debootstrap
 	sudo usermod -a -G docker `whoami`
 	echo "docker set up!  But now you need to make a new login."
 	mkdir -p `dirname $@` && touch $@
 
-stamps/docker-image-minimal: docker-setup
+stamps/docker-image-minimal: stamps/docker-setup
 	sudo /usr/share/docker.io/contrib/mkimage.sh \
 	-t `whoami`/debian-stable-minimal debootstrap --variant=minbase stable
 	mkdir -p `dirname $@` && touch $@
 
-stamps/docker-image-%: %.docker.template docker-image-minimal
+stamps/docker-image-%: %.docker.template stamps/docker-image-minimal
 	sed "s/USER/`whoami`/g" $< | \
 	docker build --rm -t `whoami`/debian-stable-$* -
 	mkdir -p `dirname $@` && touch $@
