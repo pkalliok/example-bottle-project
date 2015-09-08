@@ -29,13 +29,12 @@ stamps/docker-image-minimal: stamps/docker-setup
 	-t `whoami`/debian-stable-minimal debootstrap --variant=minbase stable
 	touch $@
 
-stamps/docker-image-%: %.docker.template stamps/docker-image-minimal
+stamps/docker-image-%: %.docker stamps/docker-image-minimal
 	sed "s/%USER%/`whoami`/g" $< | \
 	docker build --rm -t `whoami`/debian-stable-$* -
 	touch $@
 
-docker-image-test: test-example-flask.docker.template \
-		dependencies.list example-flask.py
+docker-image-test: test-example-flask.docker example-flask.py
 	mkdir -p $@
 	cp $^ $@
 	sed "s/%USER%/`whoami`/g" $< > $@/Dockerfile
