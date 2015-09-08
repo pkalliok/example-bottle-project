@@ -3,6 +3,6 @@
 while read localref localcommit remoteref remotecommit; do
 	REFSPEC="${remotecommit}..${localcommit}"
 	( git shortlog "$REFSPEC"; echo "review: $REFSPEC" ) \
-		./scripts/new-issue "code review for $localref"
+		| ./scripts/new-issue "code review for push"
 done
 
