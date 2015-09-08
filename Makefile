@@ -34,6 +34,21 @@ stamps/docker-image-%: %.docker.template stamps/docker-image-minimal
 	docker build --rm -t `whoami`/debian-stable-$* -
 	touch $@
 
+docker-image-test: test-example-flask.docker.template \
+		dependencies.list example-flask.py
+	mkdir -p $@
+	cp $^ $@
+	sed "s/%USER%/`whoami`/g" $< > $@/Dockerfile
+	touch $@
+
+stamps/docker-image-test: docker-image-test
+	docker build --rm -t `whoami`/debian-stable-test-example-flask $<
+	touch $@
+
+stamps/test-server-setup: stamps/docker-image-test
+	docker run -p 5000:5000 -it `whoami`/debian-stable-test-example-flask
+	touch $@
+
 # NB! unlike other targets, this is not meant to be run in your
 # development environment.
 # Run this on your RHEL6 workstation if you want to setup a development
