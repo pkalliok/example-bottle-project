@@ -2,7 +2,7 @@
 .PHONY: development-setup
 
 development-setup: stamps/docker-image-minimal stamps/git-setup \
-	stamps/devenv-setup
+	stamps/devenv-setup stamps/git-setup
 
 # rules for setting up the development environment
 stamps/git-setup: scripts/git-pre-commit scripts/git-commit-msg
