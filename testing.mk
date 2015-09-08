@@ -1,14 +1,16 @@
+TESTCASES = testresults/frontpage testresults/greeting testresults/unknown-url
 
-test: run-tests
+test: $(TESTCASES)
 	$(MAKE) test-server-unsetup
+
+clean-tests: 
+	rm $(TESTCASES)
 
 stamps/test-dependencies-setup: stamps/sudo-setup
 	sudo apt-get install curl
 	touch $@
 
 test-environment: stamps/test-server-setup stamps/test-dependencies-setup
-
-run-tests: testresults/frontpage testresults/greeting testresults/unknown-url
 
 testresults/frontpage: test-environment
 	curl -sI http://localhost:5000/ | grep 'Location: .*/greet/World'

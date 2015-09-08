@@ -1,9 +1,15 @@
-
-all:
+EASY_TARGETS = stamps/docker-image-flask stamps/docker-image-test \
+	       docker-image-test
 
 include testing.mk
 
-# targets for setting up the development, building and testing environments
+all:
+
+clean: clean-tests
+	test -s stamps/test-server-setup && $(MAKE) test-server-unsetup
+	rm -r $(EASY_TARGETS)
+
+# rules for setting up the development environment
 stamps/sudo-setup:
 	su -c "apt-get install sudo"
 	su -c "usermod -a -G sudo `whoami`"
