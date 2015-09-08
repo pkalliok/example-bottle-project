@@ -1,6 +1,8 @@
 
 all:
 
+include testing.mk
+
 # targets for setting up the development, building and testing environments
 stamps/sudo-setup:
 	su -c "apt-get install sudo"
@@ -24,7 +26,7 @@ stamps/docker-setup: stamps/sudo-setup stamps/backports-setup
 	echo "docker set up!  But now you need to make a new login."
 	touch $@
 
-stamps/docker-image-minimal: stamps/docker-setup
+stamps/docker-image-minimal: stamps/sudo-setup stamps/docker-setup
 	sudo /usr/share/docker.io/contrib/mkimage.sh \
 	-t `whoami`/debian-stable-minimal debootstrap --variant=minbase stable
 	touch $@
@@ -45,8 +47,12 @@ stamps/docker-image-test: docker-image-test
 	touch $@
 
 stamps/test-server-setup: stamps/docker-image-test
-	docker run -p 5000:5000 -it `whoami`/debian-stable-test-example-flask
-	touch $@
+	docker run -p 5000:5000 -d `whoami`/debian-stable-test-example-flask > $@
+
+test-server-unsetup: stamps/test-server-setup
+	docker stop `cat $<`
+	docker rm `cat $<`
+	rm $<
 
 # NB! unlike other targets, this is not meant to be run in your
 # development environment.
