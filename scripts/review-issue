@@ -1,0 +1,14 @@
+#!/bin/bash
+
+issue="$1"
+file=issues/`ls issues | grep "^$issue-"`
+refspec=`grep 'review:' "$file" | cut -d: -f2 | tr -d ' '`
+git diff "$refspec"
+cat "$file"
+read -p "Mark as reviewed? " answer
+case "$answer" in
+	y*|Y*)
+		./scripts/commit-to-issue $issue "reviewed by `whoami` (done)"
+		git push
+esac
+
