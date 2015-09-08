@@ -1,9 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 MYDIR=example-flask
 PIDFILE=$MYDIR/example-flask.pid
 PROGRAM=$MYDIR/example-flask.py
 
-test -s "$PIDFILE" && kill `cat "$PIDFILE"`
-python $PROGRAM & echo $! > "$PIDFILE"
+test -s "$PIDFILE" && kill `cat "$PIDFILE"` && rm "$PIDFILE"
+test "X$1" == "Xstart" && (python "$PROGRAM" & echo $! > "$PIDFILE")
+test "X$1" == "Xclean" && rm -r "$MYDIR"
 
