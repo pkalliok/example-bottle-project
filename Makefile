@@ -6,33 +6,33 @@ stamps/sudo-setup:
 	su -c "apt-get install sudo"
 	su -c "usermod -a -G sudo `whoami`"
 	echo "sudo set up!  But now you need to make a new login."
-	mkdir -p `dirname $@` && touch $@
+	touch $@
 
 stamps/devenv-setup: stamps/sudo-setup
 	sudo apt-get install vim ctags make git
 	sudo update-alternatives --set editor /usr/bin/vim.basic
-	mkdir -p `dirname $@` && touch $@
+	touch $@
 
 stamps/backports-setup: stamps/sudo-setup
 	sudo bash -c "echo -e '\n# Jessie backports (for docker)\ndeb http://http.debian.net/debian jessie-backports main contrib non-free' >> /etc/apt/sources.list"
 	sudo apt-get update
-	mkdir -p `dirname $@` && touch $@
+	touch $@
 
 stamps/docker-setup: stamps/sudo-setup stamps/backports-setup
 	sudo apt-get install docker.io debootstrap
 	sudo usermod -a -G docker `whoami`
 	echo "docker set up!  But now you need to make a new login."
-	mkdir -p `dirname $@` && touch $@
+	touch $@
 
 stamps/docker-image-minimal: stamps/docker-setup
 	sudo /usr/share/docker.io/contrib/mkimage.sh \
 	-t `whoami`/debian-stable-minimal debootstrap --variant=minbase stable
-	mkdir -p `dirname $@` && touch $@
+	touch $@
 
 stamps/docker-image-%: %.docker.template stamps/docker-image-minimal
 	sed "s/%USER%/`whoami`/g" $< | \
 	docker build --rm -t `whoami`/debian-stable-$* -
-	mkdir -p `dirname $@` && touch $@
+	touch $@
 
 # NB! unlike other targets, this is not meant to be run in your
 # development environment.
@@ -50,7 +50,7 @@ stamps/virtualbox-setup: debian-8.1.0-i386-CD-1.iso
 	vboxmanage storageattach $(DEVEL_HOST) --storagectl 'IDE Controller' --port 1 --device 0 --type dvddrive --medium debian-8.1.0-i386-CD-1.iso 
 	vboxmanage modifyvm $(DEVEL_HOST) --dvd debian-8.1.0-i386-CD-1.iso 
 	vboxmanage startvm $(DEVEL_HOST)
-	mkdir -p `dirname $@` && touch $@
+	touch $@
 
 debian-8.1.0-i386-CD-1.iso:
 	wget http://ftp.funet.fi/pub/linux/mirrors/debian-cdimage/8.1.0/i386/iso-cd/debian-8.1.0-i386-CD-1.iso
