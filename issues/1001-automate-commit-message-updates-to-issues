@@ -1,1 +1,2 @@
 description: add commit hooks to put commit messages related to an issue into the issue file, or make scripts to list issues with their associated commit messages
+commit: first version of mark-issue-and commit script

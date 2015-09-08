@@ -1,0 +1,15 @@
+#!/bin/bash
+
+issue="$1"; shift
+message="$*"
+sta=`echo "$message" | grep -o '([^ ()]*)' | tr -d '()'`
+
+file=issues/`ls issues | grep "^$issue-"`
+
+test -z "$file" && echo "unknown issue: $issue" && exit 1
+test -z "$message" && echo "you must provide a commit message" && exit 1
+echo "commit: $message" >> "$file"
+test -n "$sta" && echo "status: $sta" >> "$file"
+
+git commit -am "$issue: $message"
+
