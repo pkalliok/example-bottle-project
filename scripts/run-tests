@@ -1,18 +1,27 @@
 #!/bin/sh
 
 TESTURL="$1"
+RETVAL=0
+
+result() {
+	test "X$1" = X0 && echo pass && return
+	echo FAIL
+	RETVAL=1
+}
 
 echo "Running tests"
 
 echo -n "frontpage... "
-curl -sI http://$TESTURL/ | grep -q 'Location: .*/greet/World' \
-	&& echo pass || echo FAIL
+curl -sI http://$TESTURL/ | grep -q 'Location: .*/greet/World'
+result $?
 
 echo -n "greeting... "
-curl -s http://$TESTURL/greet/Hemmo | grep -q 'Hello, Hemmo' \
-	&& echo pass || echo FAIL
+curl -s http://$TESTURL/greet/Hemmo | grep -q 'Hello, Hemmo'
+result $?
 
 echo -n "unknown-url... "
-curl -sI http://$TESTURL/tweet | grep -q '404 NOT FOUND' \
-	&& echo pass || echo FAIL
+curl -sI http://$TESTURL/tweet | grep -q '404 NOT FOUND'
+result $?
+
+exit $RETVAL
 
