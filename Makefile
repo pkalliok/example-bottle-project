@@ -6,8 +6,8 @@ include testing.mk
 all:
 
 clean: clean-tests
-	test -s stamps/test-server-setup && $(MAKE) test-server-unsetup
-	rm -r $(EASY_TARGETS)
+	-test -s stamps/test-server-setup && $(MAKE) test-server-unsetup
+	rm -rf $(EASY_TARGETS)
 
 # rules for setting up the development environment
 stamps/sudo-setup:
@@ -37,31 +37,10 @@ stamps/docker-image-minimal: stamps/sudo-setup stamps/docker-setup
 	-t `whoami`/debian-stable-minimal debootstrap --variant=minbase stable
 	touch $@
 
-# rules for setting up the testing environment
 stamps/docker-image-%: %.docker stamps/docker-image-minimal
 	sed "s/%USER%/`whoami`/g" $< | \
 	docker build --rm -t `whoami`/debian-stable-$* -
 	touch $@
-
-docker-image-test: test-example-flask.docker example-flask.py \
-		stamps/docker-image-flask
-	mkdir -p $@
-	cp $^ $@
-	sed "s/%USER%/`whoami`/g" $< > $@/Dockerfile
-	touch $@
-
-stamps/docker-image-test: docker-image-test
-	docker build --rm -t `whoami`/debian-stable-test-example-flask $<
-	touch $@
-
-stamps/test-server-setup: stamps/docker-image-test
-	docker run -p 5000:5000 -d `whoami`/debian-stable-test-example-flask > $@
-	sleep 2
-
-test-server-unsetup: stamps/test-server-setup
-	docker stop `cat $<`
-	docker rm `cat $<`
-	rm $<
 
 # rules for setting up a VirtualBox for the development environment
 # NB! unlike other targets, this is not meant to be run in your
