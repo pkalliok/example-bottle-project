@@ -1,0 +1,1 @@
+description: gather statistics about test passing and code metrics with periodic (daily) builds; makefile rules to put these into cron

@@ -1,0 +1,2 @@
+description: send some kind of notification (mail/RSS/ircbot) when something in the project changes
+comment: maybe after each push, run everything and record the results
