@@ -1,0 +1,8 @@
+#!/bin/sh
+
+REFSPEC="`git parse-rev origin/master`..`git parse-rev master`"
+( git shortlog "$REFSPEC"; echo "review: $REFSPEC" ) \
+	| ./scripts/new-issue "code review for push"
+
+git push origin master
+

@@ -2,3 +2,4 @@ description: make a script which lists uninspected commits for review, provide a
 commit: testing pre-push hooks to automatically create issues for code review
 commit: automatically create issues out of pushed code
 commit: fix bugs in git-pre-push
+commit: script for pushing code to review
