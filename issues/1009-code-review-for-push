@@ -1,6 +1,0 @@
-description: 
-    Panu Kalliokoski (2):
-          1002: fix bugs in git-pre-push
-          issues/1008-code-review-for-push
-    
-    review: c70a898f198b220773f4b8504af386f53362d44c..a65402bdb377d8c06661f2e3bc93fefad3ea8920
