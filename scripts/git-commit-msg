@@ -1,8 +1,0 @@
-#!/bin/sh
-
-#grep '^[0-9]\{4\}:' "$1" \
-#  | while IFS=':' read issue line; do
-#	echo "commit: $line" > issues/$issue-*
-#	git add issues/$issue-*
-#done
-

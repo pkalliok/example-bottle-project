@@ -1,8 +1,0 @@
-#!/bin/sh
-
-#echo "Running pre-commit hook"
-#git stash -q --keep-index
-#make test >/dev/null || exit 1
-#git stash pop -q
-#echo "OK, all tests run"
-
