@@ -36,7 +36,8 @@ stamps/docker-image-%: %.docker stamps/docker-image-minimal
 	docker build --rm -t `whoami`/debian-stable-$* -
 	touch $@
 
-docker-image-test: test-example-flask.docker example-flask.py
+docker-image-test: test-example-flask.docker example-flask.py \
+		stamps/docker-image-flask
 	mkdir -p $@
 	cp $^ $@
 	sed "s/%USER%/`whoami`/g" $< > $@/Dockerfile
