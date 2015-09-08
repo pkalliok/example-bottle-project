@@ -1,1 +1,2 @@
 description: automatically create information about tests passing, code coverage, etc. for code reviewers
+depends: 1002-code-review-tools
