@@ -1,0 +1,18 @@
+#!/bin/sh
+
+TESTURL="$1"
+
+echo "Running tests"
+
+echo -n "frontpage... "
+curl -sI http://$TESTURL/ | grep -q 'Location: .*/greet/World' \
+	&& echo pass || echo FAIL
+
+echo -n "greeting... "
+curl -s http://$TESTURL/greet/Hemmo | grep -q 'Hello, Hemmo' \
+	&& echo pass || echo FAIL
+
+echo -n "unknown-url... "
+curl -sI http://$TESTURL/tweet | grep -q '404 NOT FOUND' \
+	&& echo pass || echo FAIL
+

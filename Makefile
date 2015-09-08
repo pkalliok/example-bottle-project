@@ -6,7 +6,7 @@ all:
 	@echo 'Also, you can set up your development environment with'
 	@echo '"make development-setup".'
 
-clean: clean-tests
+clean:
 	-test -s stamps/test-server-setup && $(MAKE) test-server-unsetup
 	rm -rf $(EASY_TARGETS)
 
