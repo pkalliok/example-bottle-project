@@ -3,6 +3,7 @@ EASY_TARGETS = stamps/docker-image-flask stamps/docker-image-test \
 
 include testing.mk
 include develop.mk
+include issues.mk
 
 all:
 	@echo 'use "make test", "make deploy" or "make clean"'
