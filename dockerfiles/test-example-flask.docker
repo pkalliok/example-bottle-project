@@ -1,4 +1,4 @@
-FROM %USER%/debian-stable-example-flask
+FROM %USER%/debian-stable-flask
 COPY example-flask.py ./
 EXPOSE 5000
 CMD ["python", "example-flask.py"]
