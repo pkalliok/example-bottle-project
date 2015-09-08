@@ -1,0 +1,3 @@
+#!/bin/bash
+
+grep -L '^status: done' issues/*
