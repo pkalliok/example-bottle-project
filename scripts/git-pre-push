@@ -1,8 +1,8 @@
 #!/bin/sh
 
-echo info about refs:
-
-echo ==============
-cat
-echo ==============
+while read localref localcommit remoteref remotecommit; do
+	REFSPEC="${remotecommit}..${localcommit}"
+	( git shortlog "$REFSPEC"; echo "review: $REFSPEC" ) \
+		./scripts/new-issue "code review for $localref"
+done
 

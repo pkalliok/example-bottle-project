@@ -1,2 +1,3 @@
 description: make a script which lists uninspected commits for review, provide an UI for marking commits reviewed, and add this information automatically to the associated issues.
 commit: testing pre-push hooks to automatically create issues for code review
+commit: automatically create issues out of pushed code

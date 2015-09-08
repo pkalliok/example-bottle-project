@@ -6,7 +6,7 @@ SSH_DEST=$(DEPLOY_USER)@$(DEPLOY_SERVER)
 .PHONY: deploy undeploy test-deploy
 
 deploy: stamps/deploy
-	
+
 stamps/deploy: source/example-flask.py source/restart-example-flask \
 		stamps/install-depends
 	rsync $^ $(SSH_DEST):example-flask/

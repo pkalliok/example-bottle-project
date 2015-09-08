@@ -8,9 +8,11 @@ git stash -q --keep-index
 NUMBER=`ls issues | grep '^[0-9]\{4\}-' | tail -1 | cut -d- -f1` 
 FILE="issues/`expr $NUMBER + 1`-`echo "$@" | tr ' ' '-'`"
 echo 'description: ' > "$FILE"
-"$EDITOR" "$FILE"
-grep -qx 'description: ' "$FILE" && rm "$FILE" \
-	&& echo "No description, deleting $FILE"
+if test -t 0; then
+	"$EDITOR" "$FILE" 
+else
+	sed 's/^/    /' >> "$FILE"
+fi
 
 git add "$FILE" && git commit -m "$FILE"
 
