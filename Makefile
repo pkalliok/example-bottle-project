@@ -30,7 +30,7 @@ stamps/docker-image-minimal: stamps/docker-setup
 	mkdir -p `dirname $@` && touch $@
 
 stamps/docker-image-%: %.docker.template stamps/docker-image-minimal
-	sed "s/USER/`whoami`/g" $< | \
+	sed "s/%USER%/`whoami`/g" $< | \
 	docker build --rm -t `whoami`/debian-stable-$* -
 	mkdir -p `dirname $@` && touch $@
 
