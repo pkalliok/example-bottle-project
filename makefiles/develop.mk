@@ -5,8 +5,9 @@ development-setup: stamps/docker-image-minimal stamps/git-setup \
 	stamps/devenv-setup
 
 # rules for setting up the development environment
-stamps/git-setup:
+stamps/git-setup: scripts/git-pre-commit scripts/git-commit-msg
 	ln -sf ../../scripts/git-pre-commit .git/hooks/pre-commit
+	ln -sf ../../scripts/git-commit-msg .git/hooks/commit-msg
 	touch $@
 
 stamps/sudo-setup:
