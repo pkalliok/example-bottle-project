@@ -37,6 +37,7 @@ stamps/docker-image-minimal: stamps/sudo-setup stamps/docker-setup
 	-t `whoami`/debian-stable-minimal debootstrap --variant=minbase stable
 	touch $@
 
+# rules for setting up the testing environment
 stamps/docker-image-%: %.docker stamps/docker-image-minimal
 	sed "s/%USER%/`whoami`/g" $< | \
 	docker build --rm -t `whoami`/debian-stable-$* -
@@ -55,12 +56,14 @@ stamps/docker-image-test: docker-image-test
 
 stamps/test-server-setup: stamps/docker-image-test
 	docker run -p 5000:5000 -d `whoami`/debian-stable-test-example-flask > $@
+	sleep 2
 
 test-server-unsetup: stamps/test-server-setup
 	docker stop `cat $<`
 	docker rm `cat $<`
 	rm $<
 
+# rules for setting up a VirtualBox for the development environment
 # NB! unlike other targets, this is not meant to be run in your
 # development environment.
 # Run this on your RHEL6 workstation if you want to setup a development
