@@ -1,1 +1,2 @@
 description: add rules to test deployment after deploy.
+depends: 0002-automate-deployment
