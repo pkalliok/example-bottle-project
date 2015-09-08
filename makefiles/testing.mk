@@ -13,8 +13,8 @@ stamps/test-dependencies-setup: stamps/sudo-setup
 test-environment: stamps/test-server-setup stamps/test-dependencies-setup
 
 # build testing images
-docker-image-test: test-example-flask.docker example-flask.py \
-		stamps/docker-image-flask
+docker-image-test: dockerfiles/test-example-flask.docker \
+		source/example-flask.py stamps/docker-image-flask
 	mkdir -p $@
 	cp $^ $@
 	sed "s/%USER%/`whoami`/g" $< > $@/Dockerfile

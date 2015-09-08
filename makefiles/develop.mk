@@ -27,7 +27,7 @@ stamps/docker-image-minimal: stamps/sudo-setup stamps/docker-setup
 	-t `whoami`/debian-stable-minimal debootstrap --variant=minbase stable
 	touch $@
 
-stamps/docker-image-%: %.docker stamps/docker-image-minimal
+stamps/docker-image-%: dockerfiles/%.docker stamps/docker-image-minimal
 	sed "s/%USER%/`whoami`/g" $< | \
 	docker build --rm -t `whoami`/debian-stable-$* -
 	touch $@
