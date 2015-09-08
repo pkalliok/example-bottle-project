@@ -1,4 +1,6 @@
 #!/bin/sh
 
-env | grep GIT
-pwd
+git stash -q --keep-index
+make test >/dev/null || exit 1
+git stash pop -q
+

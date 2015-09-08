@@ -1,5 +1,14 @@
 
+.PHONY: development-setup
+
+development-setup: stamps/docker-image-minimal stamps/git-setup \
+	stamps/devenv-setup
+
 # rules for setting up the development environment
+stamps/git-setup:
+	ln -sf ../../scripts/git-pre-commit .git/hooks/pre-commit
+	touch $@
+
 stamps/sudo-setup:
 	su -c "apt-get install sudo"
 	su -c "usermod -a -G sudo `whoami`"
