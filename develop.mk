@@ -3,7 +3,7 @@
 stamps/sudo-setup:
 	su -c "apt-get install sudo"
 	su -c "usermod -a -G sudo `whoami`"
-	echo "sudo set up!  But now you need to make a new login."
+	@echo "====> sudo set up!  But now you need to make a new login."
 	touch $@
 
 stamps/devenv-setup: stamps/sudo-setup
@@ -19,7 +19,7 @@ stamps/backports-setup: stamps/sudo-setup
 stamps/docker-setup: stamps/sudo-setup stamps/backports-setup
 	sudo apt-get install docker.io debootstrap
 	sudo usermod -a -G docker `whoami`
-	echo "docker set up!  But now you need to make a new login."
+	@echo "====> docker set up!  But now you need to make a new login."
 	touch $@
 
 stamps/docker-image-minimal: stamps/sudo-setup stamps/docker-setup

@@ -1,8 +1,7 @@
 TESTCASES = testresults/frontpage testresults/greeting testresults/unknown-url
 
 test: $(TESTCASES)
-	echo "====> all tests passed <===="
-	$(MAKE) test-server-unsetup
+	@echo "====> all tests passed <===="
 
 clean-tests: 
 	rm -f $(TESTCASES)
@@ -37,14 +36,14 @@ test-server-unsetup: stamps/test-server-setup
 
 # test cases
 testresults/frontpage: test-environment
-	curl -sI http://localhost:5000/ | grep 'Location: .*/greet/World'
+	curl -sI http://localhost:5000/ | grep -q 'Location: .*/greet/World'
 	echo PASS > $@
 
 testresults/greeting: test-environment
-	curl -s http://localhost:5000/greet/Hemmo | grep 'Hello, Hemmo'
+	curl -s http://localhost:5000/greet/Hemmo | grep -q 'Hello, Hemmo'
 	echo PASS > $@
 
 testresults/unknown-url: test-environment
-	curl -sI http://localhost:5000/tweet | grep '404 NOT FOUND'
+	curl -sI http://localhost:5000/tweet | grep -q '404 NOT FOUND'
 	echo PASS > $@
 
