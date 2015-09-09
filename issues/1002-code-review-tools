@@ -7,3 +7,4 @@ commit: get rid of git hooks, as they are error-prone
 commit: first working version of scripts/push-code-for-review
 commit: moved rest of this issue into 1010 (done)
 status: done
+comment: more stuff to do in 1014
