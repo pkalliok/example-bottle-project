@@ -2,6 +2,7 @@
 test: stamps/test-server-setup stamps/test-dependencies-setup
 	./scripts/run-tests localhost:5000
 	@echo "====> all tests passed <===="
+	$(MAKE) test-server-unsetup
 
 stamps/test-dependencies-setup: stamps/sudo-setup
 	sudo apt-get install curl
