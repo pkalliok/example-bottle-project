@@ -1,0 +1,6 @@
+description: 
+    Panu Kalliokoski (2):
+          issues/1015-ensure-test-server-is-stopped-before-starting-a-new-one
+          1015: made test-server-unsetup idempotent added it as a dependency to stamps/test-server.pid
+    
+    review: 77c18e3391a26ba486333449849f1ce4c75ca10c..7b7361ebcda56bac34df55d56933206270b55e64
