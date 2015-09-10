@@ -1,1 +1,3 @@
 description: make tests that test the tests for their code coverage
+comment: there's python-coverage that can be used and should be added to devenv-setup
+comment: run a separate testing docker image with python-coverage installed; run with python-coverage run; and test with python-coverage report example-flask.py --skip-covered

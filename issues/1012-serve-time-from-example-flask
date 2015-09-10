@@ -1,3 +1,5 @@
 description: Add a new url to fetch time over net
 commit: new /time handler in example-flask (done)
 status: done
+commit: automated tests for time serving (tested)
+status: tested

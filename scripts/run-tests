@@ -23,5 +23,9 @@ echo -n "unknown-url... "
 curl -sI http://$TESTURL/tweet | grep -q '404 NOT FOUND'
 result $?
 
+echo -n "time... "
+curl -s http://$TESTURL/time | grep -q ' ..:..:.. '
+result $?
+
 exit $RETVAL
 
