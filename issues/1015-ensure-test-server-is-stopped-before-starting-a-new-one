@@ -1,1 +1,2 @@
 description: currently test-server-unsetup depends on stamps/test-server-setup, but it should be the other way around: usually you don't want to run a test server just to bring it down (even if in a strict sense you need to).
+commit: made test-server-unsetup idempotent added it as a dependency to stamps/test-server.pid

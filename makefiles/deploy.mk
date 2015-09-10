@@ -3,8 +3,6 @@ DEPLOY_USER=atehwa
 DEPLOY_SERVER=aulis.sange.fi
 SSH_DEST=$(DEPLOY_USER)@$(DEPLOY_SERVER)
 
-.PHONY: deploy undeploy test-deploy
-
 deploy: stamps/deploy
 
 stamps/deploy: source/example-flask.py source/restart-example-flask \
@@ -23,4 +21,6 @@ stamps/install-depends:
 
 test-deploy: stamps/deploy
 	./scripts/run-tests $(DEPLOY_SERVER):5000
+
+.PHONY: deploy undeploy test-deploy
 
