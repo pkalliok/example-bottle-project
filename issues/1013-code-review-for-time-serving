@@ -6,3 +6,5 @@ description:
     
     review: ef2becbf03cb1860a6f7144f59750fc33b240feb..01ffbcb7a418506116cbb1badb0f6ca39563edd8
 comment: it also includes unrelated functionality changes in the greeting function
+commit: reverted changes to greeting (done)
+status: done

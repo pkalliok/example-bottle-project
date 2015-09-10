@@ -7,7 +7,7 @@ myapp = Flask('example-flask')
 def default(): return redirect('/greet/World')
 
 @myapp.route('/greet/<thing>')
-def greet(thing): return "Hello, darling %s!" % thing
+def greet(thing): return "Hello, %s!" % thing
 
 @myapp.route('/time')
 def time(): return str(ctime())
