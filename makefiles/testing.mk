@@ -9,13 +9,13 @@ stamps/test-dependencies-setup: stamps/sudo-setup
 
 # build testing images
 docker-image-test: dockerfiles/test-example-flask.docker \
-		source/example-flask.py stamps/docker-image-flask
+		source/example-flask.py
 	mkdir -p $@
 	cp $^ $@
 	sed "s/%USER%/`whoami`/g" $< > $@/Dockerfile
 	touch $@
 
-stamps/docker-image-test: docker-image-test
+stamps/docker-image-test: docker-image-test stamps/docker-image-flask
 	docker build --rm -t `whoami`/debian-stable-test-example-flask $<
 	touch $@
 
